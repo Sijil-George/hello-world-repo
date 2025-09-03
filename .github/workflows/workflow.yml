@@ -9,6 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy
+        timeout-minutes: 1
         run: |
            echo "Deploying to production..." 
-           sleep 100s
+           sleep 600s

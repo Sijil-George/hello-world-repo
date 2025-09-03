@@ -3,13 +3,19 @@ on:
   push:
     branches:
       - main
+  workflow_run:
+    
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest,ubuntu-20.04,windows-latest]
+        images: [hello-world,alpine]
+    runs-on: ${{matrix.os}}
     steps:
-      - uses: actions/checkout@v4
-      - name: Deploy
-        timeout-minutes: 1
-        run: |
-           echo "Deploying to production..." 
-           sleep 600s
+    - name: Echo Docker details
+      run: docker info 
+
+    - name: Run image on ${{matrix.os}}
+      run: docker run ${{matrix.images}}
+      
